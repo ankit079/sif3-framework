@@ -26,7 +26,7 @@
 
     <!-- Oracle specific properties -->
     <!-- 
-    <property name="connection.connection_string">User ID=nhibernate;Password=nhibernate;Data Source=localhost</property>
+    <property name="connection.connection_string">User ID=nhibernate;Password=nhibernate;Data Source=LAPTOP-88G2D4DP</property>
     <property name="connection.driver_class">NHibernate.Driver.OracleClientDriver</property>
     <property name="dialect">NHibernate.Dialect.OracleDialect</property>
     <property name="query.substitutions">true 1, false 0, yes 'Y', no 'N'</property>

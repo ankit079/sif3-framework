@@ -4,7 +4,7 @@ rem ============================================================================
 rem == User defined environment variables                                     ==
 rem ============================================================================
 
-set EXECUTABLE_PATH=..\..\..\Code\Sif3FrameworkDemo\Sif.Framework.Demo.Setup\bin\Debug\
+set EXECUTABLE_PATH=c:\Dev\sif3-framework-dotnet\Code\Sif3FrameworkDemo\Sif.Framework.Demo.Setup\bin\Debug\
 set EXECUTABLE=Sif.Framework.Demo.Setup.exe
 
 echo EXECUTABLE=%EXECUTABLE_PATH%%EXECUTABLE%

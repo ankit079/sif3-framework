@@ -4,12 +4,12 @@
     <description>SIF3 demo default zone</description>
   </defaultZone>
   <infrastructureServices>
-    <infrastructureService name="environment">http://localhost:62921/api/environments</infrastructureService>
-    <infrastructureService name="requestsConnector">http://localhost:53180/api</infrastructureService>
-    <infrastructureService name="servicesConnector">http://localhost:53180/services</infrastructureService>
-    <infrastructureService name="provisionRequests">http://localhost:62921/api/provision</infrastructureService>
-    <infrastructureService name="queues">http://localhost:62921/api/queues</infrastructureService>
-    <infrastructureService name="subscriptions">http://localhost:62921/api/subscriptions</infrastructureService>
+    <infrastructureService name="environment">http://LAPTOP-88G2D4DP:62921/api/environments</infrastructureService>
+    <infrastructureService name="requestsConnector">http://LAPTOP-88G2D4DP:53180/api</infrastructureService>
+    <infrastructureService name="servicesConnector">http://LAPTOP-88G2D4DP:53180/services</infrastructureService>
+    <infrastructureService name="provisionRequests">http://LAPTOP-88G2D4DP:62921/api/provision</infrastructureService>
+    <infrastructureService name="queues">http://LAPTOP-88G2D4DP:62921/api/queues</infrastructureService>
+    <infrastructureService name="subscriptions">http://LAPTOP-88G2D4DP:62921/api/subscriptions</infrastructureService>
   </infrastructureServices>
   <provisionedZones>
     <provisionedZone id="Sif3UsDemoZone1">

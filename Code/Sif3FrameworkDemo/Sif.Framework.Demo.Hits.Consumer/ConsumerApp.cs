@@ -194,24 +194,24 @@ namespace Sif.Framework.Demo.Hits.Consumer
 
         }
 
-        static void Main(string[] args)
-        {
-            ConsumerApp app = new ConsumerApp();
+        //static void Main(string[] args)
+        //{
+        //    ConsumerApp app = new ConsumerApp();
 
-            try
-            {
-                app.RunSchoolInfoConsumer();
-                app.RunStaffPersonalConsumer();
-                app.RunStudentPersonalConsumer();
-            }
-            catch (Exception e)
-            {
-                if (log.IsErrorEnabled) log.Error("Error running the ConsumerApp.\n" + ExceptionUtils.InferErrorResponseMessage(e), e);
-            }
+        //    try
+        //    {
+        //        app.RunSchoolInfoConsumer();
+        //        app.RunStaffPersonalConsumer();
+        //        app.RunStudentPersonalConsumer();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        if (log.IsErrorEnabled) log.Error("Error running the ConsumerApp.\n" + ExceptionUtils.InferErrorResponseMessage(e), e);
+        //    }
 
-            Console.WriteLine("Press any key to continue ...");
-            Console.ReadKey();
-        }
+        //    Console.WriteLine("Press any key to continue ...");
+        //    Console.ReadKey();
+        //}
 
     }
 

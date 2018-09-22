@@ -35,9 +35,9 @@ namespace Sif.Framework.Demo.Au.Consumer
 
         private static StudentPersonal CreateStudent()
         {
-            NameOfRecordType name = new NameOfRecordType { Type = NameOfRecordTypeType.LGL, FamilyName = RandomNameGenerator.FamilyName, GivenName = RandomNameGenerator.GivenName };
-            PersonInfoType personInfo = new PersonInfoType { Name = name };
-            StudentPersonal studentPersonal = new StudentPersonal { LocalId = random.Next(10000, 99999).ToString(), PersonInfo = personInfo };
+            var name = new NameOfRecordType { Type = NameOfRecordTypeType.LGL, FamilyName = RandomNameGenerator.FamilyName, GivenName = RandomNameGenerator.GivenName };
+            var personInfo = new PersonInfoType { Name = name };
+            var studentPersonal = new StudentPersonal { LocalId = random.Next(10000, 99999).ToString(), PersonInfo = personInfo };
 
             return studentPersonal;
         }
@@ -56,7 +56,7 @@ namespace Sif.Framework.Demo.Au.Consumer
 
         private void RunStudentPersonalConsumer()
         {
-            StudentPersonalConsumer studentPersonalConsumer = new StudentPersonalConsumer(
+            var studentPersonalConsumer = new StudentPersonalConsumer(
                 SettingsManager.ConsumerSettings.ApplicationKey,
                 SettingsManager.ConsumerSettings.InstanceId,
                 SettingsManager.ConsumerSettings.UserToken,
@@ -68,9 +68,9 @@ namespace Sif.Framework.Demo.Au.Consumer
             {
                 // Retrieve Bart Simpson using QBE.
                 if (log.IsInfoEnabled) log.Info("*** Retrieve Bart Simpson using QBE.");
-                NameOfRecordType name = new NameOfRecordType { FamilyName = "Simpson", GivenName = "Bart" };
-                PersonInfoType personInfo = new PersonInfoType { Name = name };
-                StudentPersonal studentPersonal = new StudentPersonal { PersonInfo = personInfo };
+                var name = new NameOfRecordType { FamilyName = "Simpson", GivenName = "Bart" };
+                var personInfo = new PersonInfoType { Name = name };
+                var studentPersonal = new StudentPersonal { PersonInfo = personInfo };
                 IEnumerable<StudentPersonal> filteredStudents = studentPersonalConsumer.QueryByExample(studentPersonal);
 
                 foreach (StudentPersonal student in filteredStudents)
@@ -80,7 +80,7 @@ namespace Sif.Framework.Demo.Au.Consumer
 
                 // Create a new student.
                 if (log.IsInfoEnabled) log.Info("*** Create a new student.");
-                string[] text = new string[]
+                var text = new string[]
                 {
                     @"
                         <MedicalCondition>
@@ -91,16 +91,16 @@ namespace Sif.Framework.Demo.Au.Consumer
                         </MedicalCondition>
                     "
                 };
-                SIF_ExtendedElementsTypeSIF_ExtendedElement extendedElement = new SIF_ExtendedElementsTypeSIF_ExtendedElement { Name = "MedicalConditions", Text = text };
-                SIF_ExtendedElementsTypeSIF_ExtendedElement[] extendedElements = new SIF_ExtendedElementsTypeSIF_ExtendedElement[] { extendedElement };
-                NameOfRecordType newStudentName = new NameOfRecordType { FamilyName = "Wayne", GivenName = "Bruce", Type = NameOfRecordTypeType.LGL };
-                PersonInfoType newStudentInfo = new PersonInfoType { Name = newStudentName };
+                var extendedElement = new SIF_ExtendedElementsTypeSIF_ExtendedElement { Name = "MedicalConditions", Text = text };
+                var extendedElements = new SIF_ExtendedElementsTypeSIF_ExtendedElement[] { extendedElement };
+                var newStudentName = new NameOfRecordType { FamilyName = "Wayne", GivenName = "Bruce", Type = NameOfRecordTypeType.LGL };
+                var newStudentInfo = new PersonInfoType { Name = newStudentName };
                 string studentID = Guid.NewGuid().ToString();
-                StudentPersonal newStudent = new StudentPersonal { RefId = studentID, LocalId = "555", PersonInfo = newStudentInfo, SIF_ExtendedElements = extendedElements };
+                var newStudent = new StudentPersonal { RefId = studentID, LocalId = "555", PersonInfo = newStudentInfo, SIF_ExtendedElements = extendedElements };
 
                 try
                 {
-                    StudentPersonal retrievedNewStudent = studentPersonalConsumer.Create(newStudent, true);
+                    var retrievedNewStudent = studentPersonalConsumer.Create(newStudent, true);
                     if (log.IsInfoEnabled) log.Info($"Created new student {newStudent.PersonInfo.Name.GivenName} {newStudent.PersonInfo.Name.FamilyName} with ID of {studentID}.");
                 }
                 catch (UnauthorizedAccessException)
@@ -110,14 +110,14 @@ namespace Sif.Framework.Demo.Au.Consumer
 
                 // Create multiple new students.
                 if (log.IsInfoEnabled) log.Info("*** Create multiple new students.");
-                List<StudentPersonal> newStudents = CreateStudents(5);
+                 var newStudents = CreateStudents(5);
 
                 try
                 {
-                    MultipleCreateResponse multipleCreateResponse = studentPersonalConsumer.Create(newStudents);
+                    var multipleCreateResponse = studentPersonalConsumer.Create(newStudents);
                     int count = 0;
 
-                    foreach (CreateStatus status in multipleCreateResponse.StatusRecords)
+                    foreach (var status in multipleCreateResponse.StatusRecords)
                     {
                         if (log.IsInfoEnabled) log.Info("Create status code is " + status.StatusCode);
                         newStudents[count++].RefId = status.Id;
@@ -125,16 +125,16 @@ namespace Sif.Framework.Demo.Au.Consumer
 
                     // Update multiple students.
                     if (log.IsInfoEnabled) log.Info("*** Update multiple students.");
-                    foreach (StudentPersonal student in newStudents)
+                    foreach (var student in newStudents)
                     {
                         student.PersonInfo.Name.GivenName += "o";
                     }
 
                     try
                     {
-                        MultipleUpdateResponse multipleUpdateResponse = studentPersonalConsumer.Update(newStudents);
+                        var multipleUpdateResponse = studentPersonalConsumer.Update(newStudents);
 
-                        foreach (UpdateStatus status in multipleUpdateResponse.StatusRecords)
+                        foreach (var status in multipleUpdateResponse.StatusRecords)
                         {
                             if (log.IsInfoEnabled) log.Info("Update status code is " + status.StatusCode);
                         }
@@ -148,16 +148,16 @@ namespace Sif.Framework.Demo.Au.Consumer
                     if (log.IsInfoEnabled) log.Info("*** Delete multiple students.");
                     ICollection<string> refIds = new List<string>();
 
-                    foreach (CreateStatus status in multipleCreateResponse.StatusRecords)
+                    foreach (var status in multipleCreateResponse.StatusRecords)
                     {
                         refIds.Add(status.Id);
                     }
 
                     try
                     {
-                        MultipleDeleteResponse multipleDeleteResponse = studentPersonalConsumer.Delete(refIds);
+                        var multipleDeleteResponse = studentPersonalConsumer.Delete(refIds);
 
-                        foreach (DeleteStatus status in multipleDeleteResponse.StatusRecords)
+                        foreach (var status in multipleDeleteResponse.StatusRecords)
                         {
                             if (log.IsInfoEnabled) log.Info("Delete status code is " + status.StatusCode);
                         }
@@ -176,7 +176,7 @@ namespace Sif.Framework.Demo.Au.Consumer
                 if (log.IsInfoEnabled) log.Info("*** Retrieve all students from zone \"Gov\" and context \"Curr\".");
                 IEnumerable<StudentPersonal> students = studentPersonalConsumer.Query(zoneId: "Gov", contextId: "Curr");
 
-                foreach (StudentPersonal student in students)
+                foreach (var student in students)
                 {
                     if (log.IsInfoEnabled) log.Info("Student name is " + student.PersonInfo.Name.GivenName + " " + student.PersonInfo.Name.FamilyName);
                 }
@@ -186,7 +186,7 @@ namespace Sif.Framework.Demo.Au.Consumer
                     // Retrieve a single student.
                     if (log.IsInfoEnabled) log.Info("*** Retrieve a single student.");
                     string studentId = students.ElementAt(1).RefId;
-                    StudentPersonal secondStudent = studentPersonalConsumer.Query(studentId);
+                    var secondStudent = studentPersonalConsumer.Query(studentId);
                     if (log.IsInfoEnabled) log.Info("Name of second student is " + secondStudent.PersonInfo.Name.GivenName + " " + secondStudent.PersonInfo.Name.FamilyName);
 
                     // Update that student and confirm.
@@ -211,7 +211,7 @@ namespace Sif.Framework.Demo.Au.Consumer
                     try
                     {
                         studentPersonalConsumer.Delete(studentId);
-                        StudentPersonal deletedStudent = studentPersonalConsumer.Query(studentId);
+                        var deletedStudent = studentPersonalConsumer.Query(studentId);
                         bool studentDeleted = (deletedStudent == null ? true : false);
 
                         if (studentDeleted)
@@ -231,7 +231,7 @@ namespace Sif.Framework.Demo.Au.Consumer
 
                 // Retrieve students based on Teaching Group using Service Paths.
                 if (log.IsInfoEnabled) log.Info("*** Retrieve students based on Teaching Group using Service Paths.");
-                EqualCondition condition = new EqualCondition() { Left = "TeachingGroups", Right = "597ad3fe-47e7-4b2c-b919-a93c564d19d0" };
+                var condition = new EqualCondition() { Left = "TeachingGroups", Right = "597ad3fe-47e7-4b2c-b919-a93c564d19d0" };
                 IList<EqualCondition> conditions = new List<EqualCondition>();
                 conditions.Add(condition);
 
@@ -239,13 +239,13 @@ namespace Sif.Framework.Demo.Au.Consumer
                 {
                     IEnumerable<StudentPersonal> teachingGroupStudents = studentPersonalConsumer.QueryByServicePath(conditions);
 
-                    foreach (StudentPersonal student in teachingGroupStudents)
+                    foreach (var student in teachingGroupStudents)
                     {
                         if (log.IsInfoEnabled) log.Info("Student name is " + student.PersonInfo.Name.GivenName + " " + student.PersonInfo.Name.FamilyName);
 
                         if (student.SIF_ExtendedElements != null && student.SIF_ExtendedElements.Length > 0)
                         {
-                            foreach (SIF_ExtendedElementsTypeSIF_ExtendedElement element in student.SIF_ExtendedElements)
+                            foreach (var element in student.SIF_ExtendedElements)
                             {
                                 foreach (string content in element.Text)
                                 {
@@ -273,7 +273,7 @@ namespace Sif.Framework.Demo.Au.Consumer
                 }
                 else
                 {
-                    foreach (StudentPersonal student in changedStudents)
+                    foreach (var student in changedStudents)
                     {
                         if (log.IsInfoEnabled) log.Info("Student name is " + student.PersonInfo.Name.GivenName + " " + student.PersonInfo.Name.FamilyName);
                     }
@@ -290,7 +290,7 @@ namespace Sif.Framework.Demo.Au.Consumer
                 }
                 else
                 {
-                    foreach (StudentPersonal student in changedStudents)
+                    foreach (var student in changedStudents)
                     {
                         if (log.IsInfoEnabled) log.Info("Student name is " + student.PersonInfo.Name.GivenName + " " + student.PersonInfo.Name.FamilyName);
                     }
